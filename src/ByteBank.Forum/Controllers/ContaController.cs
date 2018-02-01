@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ByteBank.Forum.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -19,7 +20,19 @@ namespace ByteBank.Forum.Controllers
             return View();
         }
 
-        
+        [HttpPost]
+        public ActionResult Registrar(ContaRegistrarViewModel modelo)
+        {
+            if (ModelState.IsValid)
+            {
+                // Registramos o usuário
+                return RedirectToAction("Index", "Home");
+            }
+
+            // Algo de errado aconteceu. Mostraremos novamente esta view
+            // com os erros de validação.
+            return View(modelo);
+        }
 
     }
 }

@@ -1,4 +1,7 @@
-﻿using ByteBank.Forum.ViewModels;
+﻿using ByteBank.Forum.Models;
+using ByteBank.Forum.ViewModels;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +29,17 @@ namespace ByteBank.Forum.Controllers
             if (ModelState.IsValid)
             {
                 // Registramos o usuário
+                var dbContext = new AplicacaoDbContext();
+                var userStore = new UserStore<UsuarioAplicacao>(dbContext);
+                var userManager = new UserManager<UsuarioAplicacao>(userStore);
+
+                var usuario = new UsuarioAplicacao
+                {
+                    Email = modelo.Email,
+                    UserName = modelo.NomeCompleto
+                };
+                var resultado = userManager.Create(usuario, modelo.Senha);
+
                 return RedirectToAction("Index", "Home");
             }
 

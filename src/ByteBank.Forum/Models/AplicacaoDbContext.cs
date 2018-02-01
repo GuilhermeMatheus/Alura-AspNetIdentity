@@ -9,6 +9,12 @@ namespace ByteBank.Forum.Models
 {
     public class AplicacaoDbContext : IdentityDbContext<UsuarioAplicacao>
     {
+        public AplicacaoDbContext()
+            : this("DefaultConnection")
+        {
+
+        }
+
         public AplicacaoDbContext(string nameOrConnectionString)
             : base(nameOrConnectionString)
         {

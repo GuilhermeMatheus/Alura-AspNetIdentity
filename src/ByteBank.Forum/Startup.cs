@@ -16,16 +16,17 @@ namespace ByteBank.Forum
     {
         public void Configuration(IAppBuilder app)
         {
-            app.CreatePerOwinContext(() => new AplicacaoDbContext());
+            app.CreatePerOwinContext<AplicacaoDbContext>
+                (() => new AplicacaoDbContext());
 
-            app.CreatePerOwinContext<UserStore<IdentityUser>>((opt, cont) =>
-                new UserStore<IdentityUser>(
+            app.CreatePerOwinContext<UserStore<UsuarioAplicacao>>((opt, cont) =>
+                new UserStore<UsuarioAplicacao>(
                     cont.Get<AplicacaoDbContext>())
             );
 
-            app.CreatePerOwinContext<UserManager<IdentityUser>>((opt, cont) =>
-                new UserManager<IdentityUser>(
-                    cont.Get<UserStore<IdentityUser>>())
+            app.CreatePerOwinContext<UserManager<UsuarioAplicacao>>((opt, cont) =>
+                new UserManager<UsuarioAplicacao>(
+                    cont.Get<UserStore<UsuarioAplicacao>>())
             );
         }
     }

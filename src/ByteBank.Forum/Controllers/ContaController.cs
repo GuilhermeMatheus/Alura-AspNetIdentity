@@ -30,13 +30,14 @@ namespace ByteBank.Forum.Controllers
             {
                 // Registramos o usuário
                 var dbContext = new AplicacaoDbContext();
-                var userStore = new UserStore<IdentityUser>(dbContext);
-                var userManager = new UserManager<IdentityUser>(userStore);
+                var userStore = new UserStore<UsuarioAplicacao>(dbContext);
+                var userManager = new UserManager<UsuarioAplicacao>(userStore);
 
-                var usuario = new IdentityUser
+                var usuario = new UsuarioAplicacao
                 {
                     Email = modelo.Email,
-                    UserName = modelo.UserName
+                    UserName = modelo.Email,
+                    NomeCompleto = modelo.NomeCompleto
                 };
                 var resultado = userManager.Create(usuario, modelo.Senha);
 

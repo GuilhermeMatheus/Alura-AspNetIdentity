@@ -24,10 +24,8 @@ namespace ByteBank.Forum
                     cont.Get<AplicacaoDbContext>())
             );
 
-            app.CreatePerOwinContext<UserManager<UsuarioAplicacao>>((opt, cont) =>
-                new UserManager<UsuarioAplicacao>(
-                    cont.Get<UserStore<UsuarioAplicacao>>())
-            );
+            app.CreatePerOwinContext<UserManager<UsuarioAplicacao>>(
+                AplicacaoUserManager.Criar);
         }
     }
 }

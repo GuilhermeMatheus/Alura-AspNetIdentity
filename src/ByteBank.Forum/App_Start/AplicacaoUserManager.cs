@@ -32,6 +32,8 @@ namespace ByteBank.Forum
                 ObrigatorioUppercase = true
             };
 
+            userManager.EmailService = new EmailServico();
+
             return userManager;
         }
     }

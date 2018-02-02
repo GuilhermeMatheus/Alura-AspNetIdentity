@@ -7,7 +7,7 @@ using System.Web;
 
 namespace ByteBank.Forum.Models
 {
-    public class AplicacaoDbContext : IdentityDbContext<UsuarioAplicacao>
+    public class AplicacaoDbContext : IdentityDbContext<IdentityUser>
     {
         public AplicacaoDbContext()
             : this("DefaultConnection")

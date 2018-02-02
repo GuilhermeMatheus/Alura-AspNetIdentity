@@ -1,6 +1,7 @@
 ﻿using ByteBank.Forum.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Owin;
 using System;
@@ -17,14 +18,14 @@ namespace ByteBank.Forum
         {
             app.CreatePerOwinContext(() => new AplicacaoDbContext());
 
-            app.CreatePerOwinContext<UserStore<UsuarioAplicacao>>((opt, cont) =>
-                new UserStore<UsuarioAplicacao>(
-                    cont.Get<AplicacaoDbContext>(null))
+            app.CreatePerOwinContext<UserStore<IdentityUser>>((opt, cont) =>
+                new UserStore<IdentityUser>(
+                    cont.Get<AplicacaoDbContext>())
             );
 
-            app.CreatePerOwinContext<UserManager<UsuarioAplicacao>>((opt, cont) =>
-                new UserManager<UsuarioAplicacao>(
-                    cont.Get<UserStore<UsuarioAplicacao>>(null))
+            app.CreatePerOwinContext<UserManager<IdentityUser>>((opt, cont) =>
+                new UserManager<IdentityUser>(
+                    cont.Get<UserStore<IdentityUser>>())
             );
         }
     }

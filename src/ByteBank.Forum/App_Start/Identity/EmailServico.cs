@@ -15,7 +15,7 @@ namespace ByteBank.Forum.Identity
         private readonly string EMAIL_USUARIO = ConfigurationManager.AppSettings["emailService:usuario"];
         private readonly string EMAIL_SENHA = ConfigurationManager.AppSettings["emailService:senha"];
 
-        public Task SendAsync(IdentityMessage message)
+        public async Task SendAsync(IdentityMessage message)
         {
             using (var mensagemDeEmail = new MailMessage())
             {
@@ -35,7 +35,7 @@ namespace ByteBank.Forum.Identity
                     smtpClient.Credentials = new NetworkCredential(EMAIL_USUARIO, EMAIL_SENHA);
                     smtpClient.Timeout = 20000;
 
-                    return smtpClient.SendMailAsync(mensagemDeEmail);
+                    await smtpClient.SendMailAsync(mensagemDeEmail);
                 }
             }
         }

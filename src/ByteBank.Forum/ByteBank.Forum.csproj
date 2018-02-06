@@ -228,6 +228,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Conta\Registrar.cshtml" />
     <Content Include="Views\Conta\AguardandoConfirmacao.cshtml" />
+    <Content Include="Views\Conta\EmailConfirmado.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

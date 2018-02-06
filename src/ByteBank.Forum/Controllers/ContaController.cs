@@ -75,10 +75,18 @@ namespace ByteBank.Forum.Controllers
         }
 
 
-        public ActionResult ConfirmacaoEmail(int usuarioId, string codigo)
+        public async Task<ActionResult> ConfirmacaoEmail(string usuarioId, string codigo)
         {
             // lógica de verificação de código
-            return View();
+            if (usuarioId == null || codigo == null)
+                return View("Error");
+
+            var resultado = await UserManager.ConfirmEmailAsync(usuarioId, codigo);
+            
+            if (resultado.Succeeded)
+                return View("EmailConfirmado");
+            else
+                return View("Error");
         }
 
         private async Task EnviarEmailConfirmacaoAsync(UsuarioAplicacao usuario)

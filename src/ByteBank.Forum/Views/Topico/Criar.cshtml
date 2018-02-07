@@ -1,0 +1,20 @@
+﻿@model ByteBank.Forum.ViewModels.TopicoCriarViewModel
+
+@{
+    ViewBag.Title = "Criar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Novo tópico</h2>
+
+<p> Crie um tópico no fórum ByteBank! </p>
+
+@using (Html.BeginForm())
+{
+    <label class="control-label">Título:</label>
+    <input class="form-control" type="text" name="Titulo" />
+    <label class="control-label">Conteudo:</label>
+    <textarea class="form-control" name="Conteudo"></textarea>
+
+    <input type="submit" value="Criar" class="btn btn-default" />
+}

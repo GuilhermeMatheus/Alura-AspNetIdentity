@@ -74,7 +74,6 @@ namespace ByteBank.Forum.Controllers
             return View(modelo);
         }
 
-
         public async Task<ActionResult> ConfirmacaoEmail(string usuarioId, string codigo)
         {
             // lógica de verificação de código
@@ -87,6 +86,20 @@ namespace ByteBank.Forum.Controllers
                 return View("EmailConfirmado");
             else
                 return View("Error");
+        }
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Login(ContaLoginViewModelo modelo)
+        {
+            if (!ModelState.IsValid)
+                return View(modelo);
+
+            return View();
         }
 
         private async Task EnviarEmailConfirmacaoAsync(UsuarioAplicacao usuario)

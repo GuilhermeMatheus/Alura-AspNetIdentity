@@ -29,6 +29,21 @@ namespace ByteBank.Forum.Controllers
             }
         }
 
+        private SignInManager<UsuarioAplicacao, string> _signInManager;
+        public SignInManager<UsuarioAplicacao, string> SignInManager
+        {
+            get
+            {
+                if (_signInManager == null)
+                {
+                    var contextoOwin = HttpContext.GetOwinContext();
+                    _signInManager = contextoOwin.GetUserManager<SignInManager<UsuarioAplicacao, string>>();
+                }
+
+                return _signInManager;
+            }
+        }
+
         // GET: Registrar
         public ActionResult Index()
         {
@@ -99,7 +114,37 @@ namespace ByteBank.Forum.Controllers
             if (!ModelState.IsValid)
                 return View(modelo);
 
-            return View();
+            var usuario = await UserManager.FindByEmailAsync(modelo.Email);
+            if (usuario == null)
+                return SenhaOuEmailIncorreto(modelo);
+
+            var signInResultado = await SignInManager.PasswordSignInAsync(
+                usuario.UserName,
+                modelo.Senha,
+                isPersistent: modelo.ContinuarLogado,
+                shouldLockout: false);
+
+            switch (signInResultado)
+            {
+                case SignInStatus.Success:
+                    return VerificaEmailELogaUsuario(usuario);
+                default:
+                    return SenhaOuEmailIncorreto(modelo);
+            }
+        }
+
+        private ActionResult SenhaOuEmailIncorreto(ContaLoginViewModelo modelo)
+        {
+            ModelState.AddModelError("", "Senha ou email inválidos!");
+            return View("Login", modelo);
+        }
+
+        private ActionResult VerificaEmailELogaUsuario(UsuarioAplicacao usuario)
+        {
+            if (usuario.EmailConfirmed)
+                return RedirectToAction("Index", "Home");
+            else
+                return View("AguardandoConfirmacao", usuario);
         }
 
         private async Task EnviarEmailConfirmacaoAsync(UsuarioAplicacao usuario)

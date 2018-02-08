@@ -35,13 +35,17 @@ namespace ByteBank.Forum
 
             userManager.EmailService = new EmailServico();
 
-            //var provider = new DpapiDataProtectionProvider("Sample");
             var dataProtectionProvider = opcoes.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
                 userManager.UserTokenProvider =
                     new DataProtectorTokenProvider<UsuarioAplicacao>(dataProtectionProvider.Create("ForumByteBank"));
             }
+
+            userManager.UserLockoutEnabledByDefault = true;
+            userManager.MaxFailedAccessAttemptsBeforeLockout = 3;
+            userManager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
+
             return userManager;
         }
     }
